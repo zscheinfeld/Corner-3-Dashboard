@@ -375,8 +375,6 @@
       }
       #mob-roster-list .roster-divider { margin: 4px 0; }
 
-      /* Filter groups in mobile sheet */
-      .mob-filter-section { margin-bottom: 18px; }
     }
   </style>
 </head>
@@ -492,41 +490,6 @@
   <div id="mob-roster-list"></div>
 </div>
 
-<!-- Filter sheet -->
-<div class="mob-sheet" id="mob-filter-sheet">
-  <div class="mob-sheet-bar">
-    <span class="mob-sheet-title">Filters</span>
-    <button class="mob-sheet-close" data-sheet="mob-filter-sheet">✕</button>
-  </div>
-  <div class="mob-filter-section">
-    <div class="filter-label">Result</div>
-    <div class="filter-buttons">
-      <button class="filter-btn active" data-group="result" data-value="all">All</button>
-      <button class="filter-btn"        data-group="result" data-value="made">Made</button>
-      <button class="filter-btn"        data-group="result" data-value="missed">Missed</button>
-    </div>
-  </div>
-  <div class="mob-filter-section">
-    <div class="filter-label">Quarter</div>
-    <div class="filter-buttons">
-      <button class="filter-btn active" data-group="quarter" data-value="all">All</button>
-      <button class="filter-btn"        data-group="quarter" data-value="1">Q1</button>
-      <button class="filter-btn"        data-group="quarter" data-value="2">Q2</button>
-      <button class="filter-btn"        data-group="quarter" data-value="3">Q3</button>
-      <button class="filter-btn"        data-group="quarter" data-value="4">Q4</button>
-      <button class="filter-btn"        data-group="quarter" data-value="5">OT</button>
-    </div>
-  </div>
-  <div class="mob-filter-section">
-    <div class="filter-label">Range</div>
-    <div class="filter-buttons">
-      <button class="filter-btn active" data-group="range" data-value="all">All</button>
-      <button class="filter-btn"        data-group="range" data-value="close">Close &lt;8ft</button>
-      <button class="filter-btn"        data-group="range" data-value="mid">Mid-Range</button>
-      <button class="filter-btn"        data-group="range" data-value="long">3-Point</button>
-    </div>
-  </div>
-</div>
 
 <!-- Fixed bottom bar (mobile only) -->
 <div id="mob-bar">
@@ -803,7 +766,6 @@ function closeSheet() {
   if (openSheet) { openSheet.classList.remove('open'); openSheet = null; }
   backdrop.classList.remove('open');
   document.getElementById('mob-roster-btn').classList.remove('active');
-  document.getElementById('mob-filter-btn').classList.remove('active');
 }
 
 function toggleSheet(sheetId, btn) {
@@ -820,9 +782,6 @@ backdrop.addEventListener('click', closeSheet);
 document.querySelectorAll('.mob-sheet-close').forEach(b => b.addEventListener('click', closeSheet));
 document.getElementById('mob-roster-btn').addEventListener('click', function() {
   toggleSheet('mob-roster-sheet', this);
-});
-document.getElementById('mob-filter-btn').addEventListener('click', function() {
-  toggleSheet('mob-filter-sheet', this);
 });
 
 const rosterPanel  = document.getElementById('roster-panel');
