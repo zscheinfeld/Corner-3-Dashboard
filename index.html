@@ -251,7 +251,7 @@
     #mob-header, #mob-bar, #mob-backdrop, .mob-sheet { display: none; }
 
     @media (max-width: 768px) {
-      body { flex-direction: column; overflow: auto; }
+      body { flex-direction: column; overflow: hidden; height: 100dvh; }
 
       /* Hide desktop panels */
       #roster-panel, #sidebar { display: none !important; }
@@ -274,20 +274,26 @@
       #mob-player-name { font-size: 15px; font-weight: 600; }
       #mob-count       { display: none; } /* shown inline via mob-title row */
 
-      /* Main: inset for header + bottom bar */
+      /* Main: locked to viewport, no scroll */
       #main {
-        padding: 62px 0 calc(62px + env(safe-area-inset-bottom, 0px));
+        padding: 62px 0 calc(54px + max(env(safe-area-inset-bottom, 0px), 20px));
         width: 100vw;
-        min-height: 100vh;
-        align-items: flex-start;
+        height: 100dvh;
+        overflow: hidden;
+        align-items: center;
       }
       #chart-meta { display: none; }
 
-      /* Canvas scales to viewport */
-      #court-wrap { width: 100vw; }
-      canvas { width: 100vw !important; height: auto !important; display: block; }
+      /* Canvas scales to fit between header and bar, no distortion */
+      #court-wrap { width: 100%; }
+      canvas {
+        display: block;
+        width: 100vw !important;
+        max-width: calc((100dvh - 62px - 74px) * 550 / 520) !important;
+        height: auto !important;
+      }
 
-      /* Fixed bottom bar */
+      /* Fixed bottom bar — lifted clear of Safari browser chrome */
       #mob-bar {
         display: flex;
         position: fixed;
@@ -296,7 +302,7 @@
         background: #000;
         border-top: 1px solid #111;
         z-index: 100;
-        padding: 0 16px env(safe-area-inset-bottom, 0px);
+        padding: 8px 16px max(env(safe-area-inset-bottom, 0px), 20px);
         gap: 10px;
         align-items: center;
       }
@@ -333,12 +339,13 @@
         display: flex;
         flex-direction: column;
         position: fixed;
-        bottom: calc(54px + env(safe-area-inset-bottom, 0px)); left: 0; right: 0;
+        bottom: calc(54px + max(env(safe-area-inset-bottom, 0px), 20px)); left: 0; right: 0;
         background: #080808;
         border-top: 1px solid #1f1f1f;
         z-index: 300;
-        max-height: 68vh;
+        max-height: 68dvh;
         overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
         padding: 18px 20px 24px;
         transform: translateY(110%);
         transition: transform 0.24s ease;
